@@ -1,25 +1,25 @@
-# basic-auth
 
-# LAB - Class 03
+# LAB - Class 06
 
-## Project: API Server
+## Project: Basic Authorization
 
 ### Author: Mike Pace
 
 ### Problem Domain
 
-Build a REST API using Express, by creating a proper series of endpoints that perform CRUD operations on a Postgres SQL Database, using the REST standard.
+As a user, I want to create a new account so that I may later login
+As a user, I want to login to my account so that I may access protected information
 
 ### Links and Resources
 
-- [GitHub Actions ci/cd](https://github.com/catdude2000/api-server/actions)
+- [GitHub Actions ci/cd](https://github.com/catdude2000/basic-auth/actions)
 // change--------------
-- [back-end dev server url](https://api-server-basic.onrender.com/)
+- [back-end dev server url]()
 - [back-end prod server url](http://xyz.com)
 
 ### Collaborators
 
-Reece Renninger
+Ryan Gallaway
 
 ### Setup
 
