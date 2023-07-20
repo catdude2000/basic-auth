@@ -1,6 +1,7 @@
 'use strict';
 
 // 3rd Party Resources
+require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcrypt');
 const base64 = require('base-64');
@@ -13,7 +14,7 @@ const server = express();
 // Process JSON input and put the data on req.body
 server.use(express.json());
 
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+const sequelize = new Sequelize(process.env.DB_URL);
 
 // Process FORM intput and put the data on req.body
 server.use(express.urlencoded({ extended: true }));
@@ -35,8 +36,10 @@ server.post('/signup', async (req, res) => {
 // Signin Route -- login with username and password
 // test with httpie
 // http post :3000/signin -a john:foo
-server.post('/signin', async (req, res) => {
-
+server.post('/signin', //async// 
+basic, (req, res) => {
+    res.status(200).send(req.user);
+  });
   /*
     req.headers.authorization is : "Basic am9objpmb28="
     To get username and password from this, take the following steps:
@@ -47,10 +50,6 @@ server.post('/signin', async (req, res) => {
       - Pull username and password from that array
   */
 
-  let basicHeaderParts = req.headers.authorization.split(' ');  // ['Basic', 'am9objpmb28=']
-  let encodedString = basicHeaderParts.pop();  // am9objpmb28=
-  let decodedString = base64.decode(encodedString); // "username:password"
-  let [username, password] = decodedString.split(':'); // username, password
 
   /*
     Now that we finally have username and password, let's see if it's valid
@@ -59,25 +58,7 @@ server.post('/signin', async (req, res) => {
        - bcrypt does this by re-encrypting the plaintext password and comparing THAT
     3. Either we're valid or we throw an error
   */
-  try {
-    const user = await Users.findOne({ where: { username: username } });
-    const valid = await bcrypt.compare(password, user.password);
-    if (valid) {
-      res.status(200).json(user);
-    }
-    else {
-      throw new Error('Invalid User');
-    }
-  } catch (error) { res.status(403).send('Invalid Login'); }
-
-});
 
 // make sure our tables are created, start up the HTTP server.
-sequelize.sync()
-  .then(() => {
-    server.listen(3000, () => console.log('server up'));
-  }).catch(e => {
-    console.error('Could not start server', e.message);
-  });
 
 module.exports = server;

@@ -1,6 +1,6 @@
 const PORT = process.env.PORT || 3002; //use strictt?
 const server = require('./server.js');
-const { sequelizeDatabase } = require('./src/auth/models');
+const { sequelize } = require('./src/auth/models');
 
 // sequelizeDatabase
 //   .sync()
@@ -8,7 +8,8 @@ const { sequelizeDatabase } = require('./src/auth/models');
 //   .catch((e) => console.error(e));
 
 // sequelizeDatabase
-sequelizeDatabase.sync()
+sequelize
+  .sync()
   .then(() => {
     server.listen(PORT, () => console.log('server up'));
   }).catch(e => {
