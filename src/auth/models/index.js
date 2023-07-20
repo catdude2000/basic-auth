@@ -1,0 +1,20 @@
+'use strict';
+
+const { Sequelize, DataTypes } = require('sequelize');
+// const user = require('./users-model');
+const Users = require('./users-model');
+
+const DATABASE_URL = 
+// process.env.NODE_ENV === 'test' ? 'sqlite::memory' :
+// need above^^^^^
+process.env.DB_URL;
+
+const sequelizeDatabase = new Sequelize(DATABASE_URL);
+
+const userModel = Users(sequelizeDatabase, DataTypes);
+
+userModel.beforeCreate((user) => {
+  console.log('this is the user I am about to create', user);
+});
+
+module.exports = { sequelizeDatabase, userModel: userModel, DataTypes };
