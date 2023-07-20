@@ -3,6 +3,6 @@ const server = require('./server.js');
 const { sequelizeDatabase } = require('./src/auth/models');
 
 sequelizeDatabase
-.sync()
-.then(() => server.listen(PORT));
-.catch((e) => console.error(e));
+  .sync()
+  .then(() => server.listen(PORT))
+  .catch((e) => console.error(e));
